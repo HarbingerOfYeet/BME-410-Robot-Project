@@ -1,14 +1,19 @@
-from machine import Pin
+from robot_car import RobotCar
 from utime import sleep
 
-pin = Pin("LED", Pin.OUT)
+# GPIO Pins for logic input into DRV8833
+LEFT_MOTOR_PIN1 = 2
+LEFT_MOTOR_PIN2 = 3
+RIGHT_MOTOR_PIN1 = 14
+RIGHT_MOTOR_PIN2 = 15
 
-print("LED starts flashing...")
-while True:
-    try:
-        pin.toggle()
-        sleep(1) # sleep 1sec
-    except KeyboardInterrupt:
-        break
-pin.off()
-print("Finished.")
+MOTOR_PIN_ARRAY = [LEFT_MOTOR_PIN1, LEFT_MOTOR_PIN2, RIGHT_MOTOR_PIN1, RIGHT_MOTOR_PIN2]
+
+# Create instance of RobotCar class
+robot = RobotCar(MOTOR_PIN_ARRAY)
+
+if __name__ == "__main__":
+    robot.move_forward()
+    sleep(2)
+    robot.move_backward()
+    sleep(2)
