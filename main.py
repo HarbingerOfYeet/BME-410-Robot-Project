@@ -2,8 +2,8 @@ from robot_car import RobotCar
 from utime import sleep
 
 # GPIO Pins for logic input into DRV8833
-LEFT_MOTOR_PIN1 = 2
-LEFT_MOTOR_PIN2 = 3
+LEFT_MOTOR_PIN1 = 10
+LEFT_MOTOR_PIN2 = 11
 RIGHT_MOTOR_PIN1 = 14
 RIGHT_MOTOR_PIN2 = 15
 
@@ -17,3 +17,4 @@ if __name__ == "__main__":
     sleep(2)
     robot.move_backward()
     sleep(2)
+    robot.deinit()
