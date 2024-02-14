@@ -1,15 +1,36 @@
-from machine import Pin, I2C
+# Referenced from https://pimylifeup.com/raspberry-pi-light-sensor/
+
+from machine import Pin
 from utime import sleep
 
-from dht20 import DHT20
+def rc_time(rc_pin):
+    count = 0
 
-i2c0_sda = Pin(16)
-i2c0_scl = Pin(17)
-i2c0 = I2C(0, sda=i2c0_sda, scl=i2c0_scl)
+    # Output on the pin for 0.1 s
+    rc_pin = Pin(2, Pin.OUT)
+    rc_pin.low()
+    sleep(0.1)
 
-dht20 = DHT20(0x38, i2c0)
+    # Change the pin back to input
+    rc_pin.init(rc_pin.IN)
 
-while True:
-    measurements = dht20.measurements
-    print(f"Temperature: {measurements['t']} °C, humidity: {measurements['rh']} %RH")
-    sleep(1)
+    # Count until the pin reaches high
+    while (rc_pin.value() == 0):
+        count += 1
+
+    return count
+
+try:
+    while True:
+        print(rc_time(2))
+except KeyboardInterrupt:
+    print("Stopped")
+
+
+
+
+
+
+
+
+
