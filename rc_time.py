@@ -3,7 +3,7 @@
 from machine import Pin
 from utime import sleep
 
-def rc_time(rc_pin):
+def RC_Time(rc_pin):
     count = 0
 
     # Output on the pin for 0.1 s
@@ -20,11 +20,12 @@ def rc_time(rc_pin):
 
     return count
 
-try:
-    while True:
-        print(rc_time(2))
-except KeyboardInterrupt:
-    print("Stopped")
+if __name__ == "__main__":
+    try:
+        while True:
+            print(RC_Time(2))
+    except KeyboardInterrupt:
+        print("Stopped")
 
 
 
