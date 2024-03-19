@@ -21,24 +21,26 @@ class RobotCar:
         self.right_motor_pin1.freq(frequency)
         self.right_motor_pin2.freq(frequency)
         
-        self.current_speed = RobotCar.MAX_DUTY_CYCLE
+        # create separate speeds for the left and right wheels
+        self.left_speed = RobotCar.MAX_DUTY_CYCLE
+        self.right_speed = RobotCar.MAX_DUTY_CYCLE
         
     def move_forward(self):
-        self.left_motor_pin1.duty_u16(self.current_speed)
+        self.left_motor_pin1.duty_u16(self.left_speed)
         self.left_motor_pin2.duty_u16(RobotCar.MIN_DUTY_CYCLE)
         
-        self.right_motor_pin1.duty_u16(self.current_speed)
+        self.right_motor_pin1.duty_u16(self.right_speed)
         self.right_motor_pin2.duty_u16(RobotCar.MIN_DUTY_CYCLE)
            
     def move_backward(self):
         self.left_motor_pin1.duty_u16(RobotCar.MIN_DUTY_CYCLE)
-        self.left_motor_pin2.duty_u16(self.current_speed)
+        self.left_motor_pin2.duty_u16(self.left_speed)
         
         self.right_motor_pin1.duty_u16(RobotCar.MIN_DUTY_CYCLE)
-        self.right_motor_pin2.duty_u16(self.current_speed)
+        self.right_motor_pin2.duty_u16(self.right_speed)
         
     def turn_left(self):
-        self.left_motor_pin1.duty_u16(self.current_speed)
+        self.left_motor_pin1.duty_u16(self.left_speed)
         self.left_motor_pin2.duty_u16(RobotCar.MIN_DUTY_CYCLE)
         
         self.right_motor_pin1.duty_u16(RobotCar.MAX_DUTY_CYCLE)
@@ -48,7 +50,7 @@ class RobotCar:
         self.left_motor_pin1.duty_u16(RobotCar.MAX_DUTY_CYCLE)
         self.left_motor_pin2.duty_u16(RobotCar.MAX_DUTY_CYCLE)
         
-        self.right_motor_pin1.duty_u16(self.current_speed)
+        self.right_motor_pin1.duty_u16(self.left_speed)
         self.right_motor_pin2.duty_u16(RobotCar.MIN_DUTY_CYCLE)
         
     def stop(self):
@@ -63,11 +65,16 @@ class RobotCar:
       return (x - in_min) * (out_max - out_min) // (in_max - in_min) + out_min
         
     ''' new_speed is a value from 0% - 100% '''
-    def change_speed(self, new_speed):
+    def change_speed(self, motor, new_speed):
         new_duty_cycle = self.__map_range(new_speed, 0, 100, 40000, 65535)
-        self.current_speed = new_duty_cycle
-
-        
+        if (motor == "left"):
+            self.left_speed = new_duty_cycle
+        elif (motor == "right"):
+            self.right_speed = new_duty_cycle
+        else:
+            self.left_speed = new_duty_cycle
+            self.right_speed = new_duty_cycle
+            
     def deinit(self):
         """deinit PWM Pins"""
         print("Deinitializing PWM Pins")

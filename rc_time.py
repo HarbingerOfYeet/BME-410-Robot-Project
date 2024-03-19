@@ -7,7 +7,7 @@ def RC_Time(rc_pin):
     count = 0
 
     # Output on the pin for 0.1 s
-    rc_pin = Pin(2, Pin.OUT)
+    rc_pin = Pin(rc_pin, Pin.OUT)
     rc_pin.low()
     sleep(0.1)
 
@@ -23,7 +23,7 @@ def RC_Time(rc_pin):
 if __name__ == "__main__":
     try:
         while True:
-            print(RC_Time(2))
+            print(RC_Time(1))
     except KeyboardInterrupt:
         print("Stopped")
 
