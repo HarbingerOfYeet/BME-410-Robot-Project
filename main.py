@@ -1,6 +1,7 @@
 from robot_car import RobotCar
 from rc_time import RC_Time
 from machine import Pin
+from utime import sleep_us
 
 # GPIO Pins for logic input into DRV8833
 LEFT_MOTOR_PIN1 = 12
@@ -8,8 +9,12 @@ LEFT_MOTOR_PIN2 = 13
 RIGHT_MOTOR_PIN1 = 14
 RIGHT_MOTOR_PIN2 = 15
 LEFT_LIGHT_SENSOR = 1
-RIGHT_LIGHT_SENSOR = 2
+RIGHT_LIGHT_SENSOR = 18
 led = Pin("LED", Pin.OUT)
+
+# parameters for changing speed
+MAX_CHARGE_TIME = 6000
+MAX_SPEED = 50
 
 MOTOR_PIN_ARRAY = [LEFT_MOTOR_PIN1, LEFT_MOTOR_PIN2, RIGHT_MOTOR_PIN1, RIGHT_MOTOR_PIN2]
 
@@ -20,18 +25,17 @@ robot = RobotCar(MOTOR_PIN_ARRAY)
 if __name__ == "__main__":
     try:
         while True:
+            led.high()
             left_light = RC_Time(LEFT_LIGHT_SENSOR)
             right_light = RC_Time(RIGHT_LIGHT_SENSOR)
-            print("left_light:", left_light)
-            print("right_light:", right_light)
 
-            # change the speed of each wheel depending on what the current value of the sensor is
-
-            if (left_light < 300 and left_light > 60):
-                led.high()
-                robot.move_forward()
-            else:
-                led.low()
-                robot.stop()
+            # turn left, light on right
+            new_left_speed = MAX_SPEED - (left_light * MAX_SPEED / MAX_CHARGE_TIME)
+            new_right_speed = MAX_SPEED - (right_light * MAX_SPEED / MAX_CHARGE_TIME)
+            print("left:", new_left_speed)
+            print("right:", new_right_speed)
+            robot.change_speed(int(new_left_speed), int(new_right_speed))
+            robot.move_forward()
+            sleep_us(100)
     except KeyboardInterrupt:
         robot.deinit()

@@ -65,15 +65,13 @@ class RobotCar:
       return (x - in_min) * (out_max - out_min) // (in_max - in_min) + out_min
         
     ''' new_speed is a value from 0% - 100% '''
-    def change_speed(self, motor, new_speed):
-        new_duty_cycle = self.__map_range(new_speed, 0, 100, 40000, 65535)
-        if (motor == "left"):
-            self.left_speed = new_duty_cycle
-        elif (motor == "right"):
-            self.right_speed = new_duty_cycle
-        else:
-            self.left_speed = new_duty_cycle
-            self.right_speed = new_duty_cycle
+    def change_speed(self, left_speed, right_speed):
+        left_duty_cycle = self.__map_range(left_speed, 0, 100, 40000, 65535)
+        right_duty_cycle = self.__map_range(right_speed, 0, 100, 40000, 65535)
+        self.left_speed = int(left_duty_cycle)
+        self.right_speed = int(right_duty_cycle)
+        print(self.left_speed)
+        print(self.right_speed)
             
     def deinit(self):
         """deinit PWM Pins"""
