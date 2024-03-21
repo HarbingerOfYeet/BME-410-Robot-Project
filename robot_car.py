@@ -70,8 +70,6 @@ class RobotCar:
         right_duty_cycle = self.__map_range(right_speed, 0, 100, 40000, 65535)
         self.left_speed = int(left_duty_cycle)
         self.right_speed = int(right_duty_cycle)
-        print(self.left_speed)
-        print(self.right_speed)
             
     def deinit(self):
         """deinit PWM Pins"""

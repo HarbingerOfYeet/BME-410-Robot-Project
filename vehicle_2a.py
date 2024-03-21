@@ -39,8 +39,8 @@ if __name__ == "__main__":
             print("right:", right_light)
 
             # calculate speeds for each motor depending on light sensor value
-            new_left_speed = (MAX_SPEED * SLOW_MULTIPLIER) - (right_light * (MAX_SPEED * SLOW_MULTIPLIER) / MAX_CHARGE_TIME)
-            new_right_speed = MAX_SPEED - (left_light * MAX_SPEED / MAX_CHARGE_TIME)
+            new_left_speed = (MAX_SPEED * SLOW_MULTIPLIER) - (left_light * (MAX_SPEED * SLOW_MULTIPLIER) / MAX_CHARGE_TIME)
+            new_right_speed = MAX_SPEED - (right_light * MAX_SPEED / MAX_CHARGE_TIME)
             print("left:", new_left_speed)
             print("right:", new_right_speed)
             robot.change_speed(int(new_left_speed), int(new_right_speed))
