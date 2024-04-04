@@ -23,7 +23,7 @@ def RC_Time(rc_pin):
 if __name__ == "__main__":
     try:
         while True:
-            print(RC_Time(28))
+            print(RC_Time(1))
     except KeyboardInterrupt:
         print("Stopped")
 

@@ -24,27 +24,25 @@ robot = RobotCar(MOTOR_PIN_ARRAY)
 
 # currently working on vehicle 2a
 if __name__ == "__main__":
-    print("In main")
     try:
         while True:
-            print("In loop")
-
             # turn led on
             led.high()
 
-            # get charge values from light sensors
-            left_light = RC_Time(LEFT_LIGHT_SENSOR)
-            right_light = RC_Time(RIGHT_LIGHT_SENSOR)
-            print("left:", left_light)
-            print("right:", right_light)
+            # # get charge values from light sensors
+            # left_light = RC_Time(LEFT_LIGHT_SENSOR)
+            # right_light = RC_Time(RIGHT_LIGHT_SENSOR)
+            # print("left:", left_light)
+            # print("right:", right_light)
 
-            # calculate speeds for each motor depending on light sensor value
-            new_left_speed = (MAX_SPEED * SLOW_MULTIPLIER) - (right_light * (MAX_SPEED * SLOW_MULTIPLIER) / MAX_CHARGE_TIME)
-            new_right_speed = MAX_SPEED - (left_light * MAX_SPEED / MAX_CHARGE_TIME)
-            print("left:", new_left_speed)
-            print("right:", new_right_speed)
-            robot.change_speed(int(new_left_speed), int(new_right_speed))
+            # # calculate speeds for each motor depending on light sensor value
+            # new_left_speed = (MAX_SPEED * SLOW_MULTIPLIER) - (right_light * (MAX_SPEED * SLOW_MULTIPLIER) / MAX_CHARGE_TIME)
+            # new_right_speed = MAX_SPEED - (left_light * MAX_SPEED / MAX_CHARGE_TIME)
+            # print("left:", new_left_speed)
+            # print("right:", new_right_speed)
+            # robot.change_speed(int(new_left_speed), int(new_right_speed))
+            # robot.move_forward()
+            # sleep_us(100)
             robot.move_forward()
-            sleep_us(100)
     except KeyboardInterrupt:
         robot.deinit()
