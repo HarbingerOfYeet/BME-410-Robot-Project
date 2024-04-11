@@ -1,7 +1,7 @@
 from machine import Pin, I2C
 from utime import sleep
 
-from dht20 import DHT20
+from DHT20.dht20 import DHT20
 
 left_sda = Pin(8)
 left_scl = Pin(9)
